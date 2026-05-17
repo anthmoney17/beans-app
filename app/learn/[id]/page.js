@@ -273,9 +273,9 @@ export default function Lesson({ params }) {
                   </button>
                 )}
 
-                {(passed || completed) && (
-                  <a href={nextLesson ? "/learn/" + nextLesson : "/learn"} style={{ padding: '14px 40px', background: '#1a7a43', color: 'white', borderRadius: '4px', textDecoration: 'none', fontWeight: 'bold', fontSize: '14px', letterSpacing: '1px' }}>
-                    {nextLesson ? 'Next Lesson →' : 'Back to Lessons →'}
+{(passed || completed) && (
+                  <a href={!completed && nextLesson ? "/learn/" + nextLesson : "/learn"} style={{ padding: '14px 40px', background: '#1a7a43', color: 'white', borderRadius: '4px', textDecoration: 'none', fontWeight: 'bold', fontSize: '14px', letterSpacing: '1px' }}>
+                    {!completed && nextLesson ? 'Next Lesson →' : 'Back to Lessons'}
                   </a>
                 )}
               </div>
