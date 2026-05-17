@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase'
+import BeanCharacter from '../components/BeanCharacter'
 
 export default function Leaderboard() {
   const [tab, setTab] = useState('xp')
@@ -111,7 +112,7 @@ export default function Leaderboard() {
                 background: isCurrentUser(player) ? 'rgba(46,204,113,0.08)' : '#111a14',
                 border: '1px solid ' + (isCurrentUser(player) ? '#1a7a43' : index < 3 ? '#2a3a2a' : '#1e2e22'),
                 borderRadius: '8px',
-                padding: '16px 24px',
+                padding: '12px 20px',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between'
@@ -133,6 +134,15 @@ export default function Leaderboard() {
                 }}>
                   {getMedal(index)}
                 </div>
+
+                <BeanCharacter
+                  color={player.character_color || '#2ecc71'}
+                  eyes={player.character_eyes || 'default'}
+                  accessory={player.character_accessory || 'none'}
+                  background={player.character_background || 'default'}
+                  size={48}
+                />
+
                 <div>
                   <div style={{ color: '#f0f7f2', fontWeight: 'bold', fontSize: '15px' }}>
                     {getUsername(player)}
