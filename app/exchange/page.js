@@ -135,8 +135,9 @@ export default function Exchange() {
 
     if (error) { setMessage('Cannot sell: ' + error.message); return }
 
-    setMessage('Sold ' + shares + ' share(s) of ' + selectedCompany.symbol + ' for ' + total.toFixed(2) + ' Beans!')
-    await loadData()
+    const profit = (selectedCompany.price - (portfolio.find(p => p.company_id === selectedCompany.id)?.avg_buy_price || 0)) * shares
+    const xpEarned = profit > 0 ? Math.max(10, Math.min(500, Math.floor(profit / 10))) : 0
+    setMessage('Sold ' + shares + ' share(s) of ' + selectedCompany.symbol + ' for ' + total.toFixed(2) + ' Beans!' + (xpEarned > 0 ? ' +' + xpEarned + ' XP earned!' : ''))
   }
 
   if (loading) return <p style={{ padding: '40px', color: '#6b8a72' }}>Loading The Exchange...</p>
