@@ -3,6 +3,65 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase'
 
+function CandlestickChart({ data }) {
+  if (!data || data.length === 0) return (
+    <div style={{ height: '200px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <p style={{ color: '#6b8a72', fontSize: '13px' }}>No price history yet</p>
+    </div>
+  )
+
+  const width = 500
+  const height = 200
+  const padding = { top: 20, right: 20, bottom: 30, left: 60 }
+  const chartWidth = width - padding.left - padding.right
+  const chartHeight = height - padding.top - padding.bottom
+
+  const prices = data.flatMap(d => [d.high, d.low])
+  const minPrice = Math.min(...prices) * 0.999
+  const maxPrice = Math.max(...prices) * 1.001
+  const priceRange = maxPrice - minPrice
+
+  const candleWidth = Math.max(4, (chartWidth / data.length) - 2)
+  const gap = chartWidth / data.length
+
+  const toY = (price) => chartHeight - ((price - minPrice) / priceRange) * chartHeight
+
+  return (
+    <svg viewBox={"0 0 " + width + " " + height} style={{ width: '100%', height: '200px' }}>
+      <g transform={"translate(" + padding.left + "," + padding.top + ")"}>
+        {[0, 0.25, 0.5, 0.75, 1].map((t, i) => {
+          const price = minPrice + t * priceRange
+          const y = toY(price)
+          return (
+            <g key={i}>
+              <line x1={0} y1={y} x2={chartWidth} y2={y} stroke="#1e2e22" strokeWidth={1} strokeDasharray="4,4" />
+              <text x={-8} y={y + 4} textAnchor="end" fill="#6b8a72" fontSize={10}>
+                {price.toFixed(0)}
+              </text>
+            </g>
+          )
+        })}
+
+        {data.map((candle, i) => {
+          const x = i * gap + gap / 2
+          const isUp = candle.close >= candle.open
+          const color = isUp ? '#2ecc71' : '#e74c3c'
+          const bodyTop = toY(Math.max(candle.open, candle.close))
+          const bodyBottom = toY(Math.min(candle.open, candle.close))
+          const bodyHeight = Math.max(1, bodyBottom - bodyTop)
+
+          return (
+            <g key={i}>
+              <line x1={x} y1={toY(candle.high)} x2={x} y2={toY(candle.low)} stroke={color} strokeWidth={1} />
+              <rect x={x - candleWidth / 2} y={bodyTop} width={candleWidth} height={bodyHeight} fill={color} opacity={0.9} />
+            </g>
+          )
+        })}
+      </g>
+    </svg>
+  )
+}
+
 export default function Play() {
   const [stocks, setStocks] = useState([])
   const [portfolio, setPortfolio] = useState([])
@@ -10,6 +69,7 @@ export default function Play() {
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)
   const [selectedStock, setSelectedStock] = useState(null)
+  const [priceHistory, setPriceHistory] = useState([])
   const [shares, setShares] = useState(1)
   const [message, setMessage] = useState('')
   const [tab, setTab] = useState('market')
@@ -42,14 +102,22 @@ export default function Play() {
     setLoading(false)
   }
 
+  const loadHistory = async (stockId) => {
+    const { data: history } = await supabase
+      .from('price_history')
+      .select('*')
+      .eq('stock_id', stockId)
+      .order('recorded_at', { ascending: true })
+      .limit(30)
+    setPriceHistory(history || [])
+  }
+
   useEffect(() => {
     loadData()
 
     const interval = setInterval(async () => {
-      const { data, error } = await supabase.from('stocks').select('*').order('symbol')
-      if (data) {
-        setStocks([...data])
-      }
+      const { data } = await supabase.from('stocks').select('*').order('symbol')
+      if (data) setStocks(data)
     }, 60000)
 
     return () => clearInterval(interval)
@@ -74,10 +142,7 @@ export default function Play() {
       total_input: total
     })
 
-    if (error) {
-      setMessage('Trade failed: ' + error.message)
-      return
-    }
+    if (error) { setMessage('Trade failed: ' + error.message); return }
 
     setMessage('Bought ' + shares + ' share(s) of ' + selectedStock.symbol + ' for ' + total.toFixed(2) + ' Beans!')
     await loadData()
@@ -88,6 +153,9 @@ export default function Play() {
     if (!selectedStock) return
 
     const total = selectedStock.price * shares
+    const position = portfolio.find(p => p.stock_id === selectedStock.id)
+    const profit = position ? (selectedStock.price - position.avg_buy_price) * shares : 0
+    const xpEarned = profit > 0 ? Math.max(10, Math.min(500, Math.floor(profit / 10))) : 0
 
     const { error } = await supabase.rpc('sell_stock', {
       user_id_input: user.id,
@@ -97,14 +165,10 @@ export default function Play() {
       total_input: total
     })
 
-    if (error) {
-      setMessage('Cannot sell: ' + error.message)
-      return
-    }
+    if (error) { setMessage('Cannot sell: ' + error.message); return }
 
-    const profit = (selectedStock.price - (portfolio.find(p => p.stock_id === selectedStock.id)?.avg_buy_price || 0)) * shares
-const xpEarned = profit > 0 ? Math.max(10, Math.min(500, Math.floor(profit / 10))) : 0
-setMessage('Sold ' + shares + ' share(s) of ' + selectedStock.symbol + ' for ' + total.toFixed(2) + ' Beans!' + (xpEarned > 0 ? ' +' + xpEarned + ' XP earned!' : ''))
+    setMessage('Sold ' + shares + ' share(s) of ' + selectedStock.symbol + ' for ' + total.toFixed(2) + ' Beans!' + (xpEarned > 0 ? ' +' + xpEarned + ' XP earned!' : ''))
+    await loadData()
   }
 
   if (loading) return <p style={{ padding: '40px', color: '#6b8a72' }}>Loading market...</p>
@@ -152,7 +216,11 @@ setMessage('Sold ' + shares + ' share(s) of ' + selectedStock.symbol + ' for ' +
                 return (
                   <div
                     key={stock.id}
-                    onClick={() => { setSelectedStock(stock); setMessage('') }}
+                    onClick={async () => {
+                      setSelectedStock(stock)
+                      setMessage('')
+                      await loadHistory(stock.id)
+                    }}
                     style={{
                       background: selectedStock?.id === stock.id ? 'rgba(26,122,67,0.2)' : '#111a14',
                       border: '1px solid ' + (selectedStock?.id === stock.id ? '#1a7a43' : '#1e2e22'),
@@ -182,10 +250,13 @@ setMessage('Sold ' + shares + ' share(s) of ' + selectedStock.symbol + ' for ' +
             <h2 style={{ color: '#f0f7f2', fontSize: '16px', letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '16px' }}>Trade</h2>
             {selectedStock ? (
               <div style={{ background: '#111a14', border: '1px solid #1e2e22', borderRadius: '8px', padding: '24px' }}>
-                <div style={{ marginBottom: '20px' }}>
-                  <div style={{ color: '#f0f7f2', fontWeight: 'bold', fontSize: '20px' }}>{selectedStock.symbol}</div>
-                  <div style={{ color: '#6b8a72', fontSize: '13px', marginBottom: '4px' }}>{selectedStock.name}</div>
-                  <div style={{ color: '#2ecc71', fontWeight: 'bold', fontSize: '24px' }}>{selectedStock.price.toFixed(2)} Beans/share</div>
+                <div style={{ marginBottom: '16px' }}>
+                  <div style={{ color: '#f0f7f2', fontWeight: 'bold', fontSize: '20px', marginBottom: '2px' }}>{selectedStock.symbol}</div>
+                  <div style={{ color: '#6b8a72', fontSize: '13px', marginBottom: '8px' }}>{selectedStock.name}</div>
+                  <div style={{ color: '#2ecc71', fontWeight: 'bold', fontSize: '24px', marginBottom: '12px' }}>{selectedStock.price.toFixed(2)} Beans/share</div>
+                  <div style={{ background: '#0d1410', borderRadius: '8px', padding: '8px' }}>
+                    <CandlestickChart data={priceHistory} />
+                  </div>
                 </div>
 
                 <div style={{ marginBottom: '16px' }}>
