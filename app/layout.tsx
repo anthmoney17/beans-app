@@ -1,4 +1,5 @@
 import "./globals.css";
+import Nav from "./components/nav";
 
 export const metadata = {
   title: "Beans — Reap What You Sow",
@@ -8,47 +9,24 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body style={{ margin: 0, fontFamily: 'Arial, sans-serif', background: '#080c0a', color: '#e8f0ea' }}>
-        
-        <nav style={{
+      <body>
+        <Nav />
+        <main>{children}</main>
+        <footer style={{
+          borderTop: '1px solid var(--border)',
+          padding: '32px 48px',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          padding: '16px 40px',
-          background: 'rgba(8,12,10,0.95)',
-          borderBottom: '1px solid #1e2e22',
-          position: 'sticky',
-          top: 0,
-          zIndex: 100
+          marginTop: '80px'
         }}>
-          <a href="/" style={{ textDecoration: 'none' }}>
-            <span style={{ fontFamily: 'Arial', fontWeight: 'bold', fontSize: '22px', letterSpacing: '3px', color: '#f0f7f2' }}>
-              BEANS<span style={{ color: '#2ecc71' }}>.</span>
-            </span>
-          </a>
-
-          <div style={{ display: 'flex', gap: '24px', alignItems: 'center' }}>
-            <a href="/learn" style={{ color: '#6b8a72', textDecoration: 'none', fontSize: '13px', letterSpacing: '1px', textTransform: 'uppercase' }}>Learn</a>
-            <a href="/play" style={{ color: '#6b8a72', textDecoration: 'none', fontSize: '13px', letterSpacing: '1px', textTransform: 'uppercase' }}>Play</a>
-            <a href="/exchange" style={{ color: '#c9a84c', textDecoration: 'none', fontSize: '13px', letterSpacing: '1px', textTransform: 'uppercase' }}>Exchange</a>
-            <a href="/leaderboard" style={{ color: '#6b8a72', textDecoration: 'none', fontSize: '13px', letterSpacing: '1px', textTransform: 'uppercase' }}>Ranks</a>
-            <a href="/trade" style={{ color: '#6b8a72', textDecoration: 'none', fontSize: '13px', letterSpacing: '1px', textTransform: 'uppercase' }}>Trade</a>
-            <a href="/profile" style={{
-              background: '#1a7a43',
-              color: 'white',
-              textDecoration: 'none',
-              fontSize: '13px',
-              letterSpacing: '1px',
-              textTransform: 'uppercase',
-              padding: '8px 20px',
-              borderRadius: '4px',
-              fontWeight: 'bold'
-            }}>Profile</a>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <span style={{ fontSize: '18px' }}>🫘</span>
+            <span style={{ fontFamily: 'Syne, sans-serif', fontWeight: '800', fontSize: '16px', color: 'var(--text-muted)' }}>BEANS</span>
           </div>
-        </nav>
-
-        <main>{children}</main>
-
+          <span style={{ fontFamily: 'DM Mono, monospace', fontSize: '11px', color: 'var(--text-muted)', letterSpacing: '2px' }}>REAP WHAT YOU SOW</span>
+          <span style={{ fontSize: '12px', color: 'var(--text-muted)' }}>© 2025 Dean Industries</span>
+        </footer>
       </body>
     </html>
   );
