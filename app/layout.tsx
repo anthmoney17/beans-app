@@ -5,7 +5,7 @@ export const metadata = {
   description: "The all-in-one trading platform for the next generation.",
 };
 
-export default function RootLayout({ children }) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body style={{ margin: 0, fontFamily: 'Arial, sans-serif', background: '#080c0a', color: '#e8f0ea' }}>
@@ -27,10 +27,11 @@ export default function RootLayout({ children }) {
             </span>
           </a>
 
-          <div style={{ display: 'flex', gap: '32px', alignItems: 'center' }}>
+          <div style={{ display: 'flex', gap: '24px', alignItems: 'center' }}>
             <a href="/learn" style={{ color: '#6b8a72', textDecoration: 'none', fontSize: '13px', letterSpacing: '1px', textTransform: 'uppercase' }}>Learn</a>
             <a href="/play" style={{ color: '#6b8a72', textDecoration: 'none', fontSize: '13px', letterSpacing: '1px', textTransform: 'uppercase' }}>Play</a>
             <a href="/exchange" style={{ color: '#c9a84c', textDecoration: 'none', fontSize: '13px', letterSpacing: '1px', textTransform: 'uppercase' }}>Exchange</a>
+            <a href="/leaderboard" style={{ color: '#6b8a72', textDecoration: 'none', fontSize: '13px', letterSpacing: '1px', textTransform: 'uppercase' }}>Ranks</a>
             <a href="/trade" style={{ color: '#6b8a72', textDecoration: 'none', fontSize: '13px', letterSpacing: '1px', textTransform: 'uppercase' }}>Trade</a>
             <a href="/profile" style={{
               background: '#1a7a43',
