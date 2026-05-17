@@ -42,7 +42,18 @@ export default function Play() {
     setLoading(false)
   }
 
-  useEffect(() => { loadData() }, [])
+  useEffect(() => {
+    loadData()
+
+    const interval = setInterval(async () => {
+      const { data, error } = await supabase.from('stocks').select('*').order('symbol')
+      if (data) {
+        setStocks([...data])
+      }
+    }, 60000)
+
+    return () => clearInterval(interval)
+  }, [])
 
   const buyStock = async () => {
     if (!user) { window.location.href = '/auth'; return }
