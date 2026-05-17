@@ -30,6 +30,7 @@ export default function RootLayout({ children }) {
           <div style={{ display: 'flex', gap: '32px', alignItems: 'center' }}>
             <a href="/learn" style={{ color: '#6b8a72', textDecoration: 'none', fontSize: '13px', letterSpacing: '1px', textTransform: 'uppercase' }}>Learn</a>
             <a href="/play" style={{ color: '#6b8a72', textDecoration: 'none', fontSize: '13px', letterSpacing: '1px', textTransform: 'uppercase' }}>Play</a>
+            <a href="/exchange" style={{ color: '#c9a84c', textDecoration: 'none', fontSize: '13px', letterSpacing: '1px', textTransform: 'uppercase' }}>Exchange</a>
             <a href="/trade" style={{ color: '#6b8a72', textDecoration: 'none', fontSize: '13px', letterSpacing: '1px', textTransform: 'uppercase' }}>Trade</a>
             <a href="/profile" style={{
               background: '#1a7a43',
