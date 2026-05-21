@@ -1,115 +1,144 @@
-export default function BeanCharacter({ color = '#2ecc71', eyes = 'default', accessory = 'none', background = 'default', size = 120 }) {
+export default function BeanCharacter({ color = '#3dbe6c', eyes = 'default', accessory = 'none', background = 'default', size = 120 }) {
 
     const backgrounds = {
-      default: '#111a14',
-      gold: '#2a1f00',
-      purple: '#1a0a2e',
-      blue: '#001a2e',
-      red: '#2e0a0a',
-      elite: '#0a0a0a',
+      default: '#111810',
+      gold: '#1a1200',
+      purple: '#120a1e',
+      blue: '#091018',
+      red: '#180808',
+      elite: '#050505',
     }
   
-    const eyeOptions = {
+    const bodyColor = color
+    const shadowColor = 'rgba(0,0,0,0.25)'
+    const highlightColor = 'rgba(255,255,255,0.15)'
+  
+    const eyeSet = {
       default: (
-        <>
-          <circle cx="38" cy="44" r="6" fill="white" />
-          <circle cx="62" cy="44" r="6" fill="white" />
-          <circle cx="40" cy="45" r="3" fill="#1a1a1a" />
-          <circle cx="64" cy="45" r="3" fill="#1a1a1a" />
-          <circle cx="41" cy="44" r="1" fill="white" />
-          <circle cx="65" cy="44" r="1" fill="white" />
-        </>
+        <g>
+          <ellipse cx="36" cy="46" rx="7" ry="7.5" fill="white" />
+          <ellipse cx="64" cy="46" rx="7" ry="7.5" fill="white" />
+          <circle cx="37.5" cy="47" r="4" fill="#1a1a1a" />
+          <circle cx="65.5" cy="47" r="4" fill="#1a1a1a" />
+          <circle cx="39" cy="45.5" r="1.5" fill="white" />
+          <circle cx="67" cy="45.5" r="1.5" fill="white" />
+          <ellipse cx="36" cy="46" rx="7" ry="7.5" fill="none" stroke="rgba(0,0,0,0.1)" strokeWidth="0.5" />
+          <ellipse cx="64" cy="46" rx="7" ry="7.5" fill="none" stroke="rgba(0,0,0,0.1)" strokeWidth="0.5" />
+        </g>
       ),
       happy: (
-        <>
-          <path d="M32 44 Q38 50 44 44" stroke="white" strokeWidth="2.5" fill="none" strokeLinecap="round" />
-          <path d="M56 44 Q62 50 68 44" stroke="white" strokeWidth="2.5" fill="none" strokeLinecap="round" />
-        </>
+        <g>
+          <ellipse cx="36" cy="46" rx="7" ry="7.5" fill="white" />
+          <ellipse cx="64" cy="46" rx="7" ry="7.5" fill="white" />
+          <path d="M29 47 Q36 54 43 47" stroke="#1a1a1a" strokeWidth="2.5" fill="none" strokeLinecap="round" />
+          <path d="M57 47 Q64 54 71 47" stroke="#1a1a1a" strokeWidth="2.5" fill="none" strokeLinecap="round" />
+          <circle cx="33" cy="52" r="3" fill="rgba(255,150,100,0.3)" />
+          <circle cx="67" cy="52" r="3" fill="rgba(255,150,100,0.3)" />
+        </g>
       ),
       cool: (
-        <>
-          <rect x="30" y="40" width="16" height="8" rx="4" fill="#1a1a1a" />
-          <rect x="54" y="40" width="16" height="8" rx="4" fill="#1a1a1a" />
-          <rect x="46" y="42" width="8" height="3" fill="#1a1a1a" />
-          <rect x="30" y="40" width="16" height="8" rx="4" fill="none" stroke="#c9a84c" strokeWidth="1.5" />
-          <rect x="54" y="40" width="16" height="8" rx="4" fill="none" stroke="#c9a84c" strokeWidth="1.5" />
-        </>
+        <g>
+          <rect x="27" y="41" width="18" height="10" rx="5" fill="#1a1a1a" />
+          <rect x="55" y="41" width="18" height="10" rx="5" fill="#1a1a1a" />
+          <rect x="45" y="44" width="10" height="3" fill="#1a1a1a" />
+          <rect x="27" y="41" width="18" height="10" rx="5" fill="none" stroke={color} strokeWidth="1.5" opacity="0.8" />
+          <rect x="55" y="41" width="18" height="10" rx="5" fill="none" stroke={color} strokeWidth="1.5" opacity="0.8" />
+          <rect x="29" y="43" width="6" height="3" rx="1" fill="rgba(255,255,255,0.1)" />
+          <rect x="57" y="43" width="6" height="3" rx="1" fill="rgba(255,255,255,0.1)" />
+        </g>
       ),
       sleepy: (
-        <>
-          <path d="M32 44 Q38 40 44 44" stroke="white" strokeWidth="2.5" fill="none" strokeLinecap="round" />
-          <path d="M56 44 Q62 40 68 44" stroke="white" strokeWidth="2.5" fill="none" strokeLinecap="round" />
-        </>
+        <g>
+          <ellipse cx="36" cy="46" rx="7" ry="7.5" fill="white" />
+          <ellipse cx="64" cy="46" rx="7" ry="7.5" fill="white" />
+          <ellipse cx="36" cy="49" rx="7" ry="4" fill={color} opacity="0.9" />
+          <ellipse cx="64" cy="49" rx="7" ry="4" fill={color} opacity="0.9" />
+          <path d="M30 46 Q36 43 42 46" stroke="#1a1a1a" strokeWidth="2" fill="none" strokeLinecap="round" />
+          <path d="M58 46 Q64 43 70 46" stroke="#1a1a1a" strokeWidth="2" fill="none" strokeLinecap="round" />
+        </g>
       ),
       rich: (
-        <>
-          <circle cx="38" cy="44" r="6" fill="white" />
-          <circle cx="62" cy="44" r="6" fill="white" />
-          <circle cx="40" cy="45" r="3" fill="#c9a84c" />
-          <circle cx="64" cy="45" r="3" fill="#c9a84c" />
-          <circle cx="41" cy="44" r="1" fill="white" />
-          <circle cx="65" cy="44" r="1" fill="white" />
-        </>
+        <g>
+          <ellipse cx="36" cy="46" rx="7" ry="7.5" fill="white" />
+          <ellipse cx="64" cy="46" rx="7" ry="7.5" fill="white" />
+          <circle cx="37.5" cy="47" r="4" fill="#d4a843" />
+          <circle cx="65.5" cy="47" r="4" fill="#d4a843" />
+          <circle cx="39" cy="45.5" r="1.5" fill="rgba(255,255,255,0.6)" />
+          <circle cx="67" cy="45.5" r="1.5" fill="rgba(255,255,255,0.6)" />
+          <circle cx="33" cy="52" r="3" fill="rgba(255,200,50,0.3)" />
+          <circle cx="67" cy="52" r="3" fill="rgba(255,200,50,0.3)" />
+        </g>
       ),
       fire: (
-        <>
-          <circle cx="38" cy="44" r="6" fill="white" />
-          <circle cx="62" cy="44" r="6" fill="white" />
-          <circle cx="40" cy="45" r="3" fill="#e74c3c" />
-          <circle cx="64" cy="45" r="3" fill="#e74c3c" />
-          <circle cx="41" cy="44" r="1" fill="white" />
-          <circle cx="65" cy="44" r="1" fill="white" />
-        </>
+        <g>
+          <ellipse cx="36" cy="46" rx="7" ry="7.5" fill="white" />
+          <ellipse cx="64" cy="46" rx="7" ry="7.5" fill="white" />
+          <circle cx="37.5" cy="47" r="4" fill="#e05252" />
+          <circle cx="65.5" cy="47" r="4" fill="#e05252" />
+          <circle cx="39" cy="45.5" r="1.5" fill="rgba(255,200,100,0.8)" />
+          <circle cx="67" cy="45.5" r="1.5" fill="rgba(255,200,100,0.8)" />
+          <text x="50" y="26" textAnchor="middle" fontSize="10">🔥</text>
+        </g>
       ),
     }
   
-    const accessories = {
+    const accessorySet = {
       none: null,
       cap: (
-        <>
-          <ellipse cx="50" cy="22" rx="28" ry="8" fill="#1a1a1a" />
-          <rect x="22" y="14" width="56" height="12" rx="6" fill="#1a1a1a" />
-          <ellipse cx="50" cy="14" rx="20" ry="6" fill="#333" />
-          <rect x="45" y="10" width="10" height="4" rx="2" fill="#555" />
-        </>
+        <g>
+          <ellipse cx="50" cy="23" rx="26" ry="7" fill="#1a1a1a" />
+          <path d="M24 23 Q50 8 76 23" fill="#222" />
+          <ellipse cx="50" cy="23" rx="26" ry="7" fill="#252525" />
+          <rect x="44" y="10" width="12" height="5" rx="2" fill="#333" />
+          <ellipse cx="50" cy="22" rx="10" ry="3" fill="rgba(255,255,255,0.05)" />
+        </g>
       ),
       crown: (
-        <>
-          <polygon points="22,22 32,8 42,18 50,6 58,18 68,8 78,22" fill="#c9a84c" />
-          <rect x="22" y="18" width="56" height="8" rx="2" fill="#c9a84c" />
-          <circle cx="50" cy="8" r="4" fill="#e74c3c" />
-          <circle cx="32" cy="12" r="3" fill="#2ecc71" />
-          <circle cx="68" cy="12" r="3" fill="#2ecc71" />
-        </>
+        <g>
+          <path d="M20 26 L28 10 L36 20 L50 6 L64 20 L72 10 L80 26 Z" fill="#d4a843" />
+          <rect x="20" y="22" width="60" height="10" rx="3" fill="#d4a843" />
+          <rect x="20" y="22" width="60" height="4" rx="0" fill="#c49030" />
+          <circle cx="50" cy="8" r="4.5" fill="#e05252" />
+          <circle cx="28" cy="13" r="3" fill="#3dbe6c" />
+          <circle cx="72" cy="13" r="3" fill="#3dbe6c" />
+          <circle cx="50" cy="27" r="2" fill="#c49030" />
+          <circle cx="35" cy="27" r="2" fill="#c49030" />
+          <circle cx="65" cy="27" r="2" fill="#c49030" />
+        </g>
       ),
       chain: (
-        <>
-          <path d="M30 72 Q50 80 70 72" stroke="#c9a84c" strokeWidth="3" fill="none" />
-          <circle cx="50" cy="80" r="6" fill="#c9a84c" />
-          <text x="50" y="84" textAnchor="middle" fontSize="7" fill="#080c0a" fontWeight="bold">$</text>
-        </>
+        <g>
+          <path d="M28 74 Q50 84 72 74" stroke="#d4a843" strokeWidth="3" fill="none" strokeLinecap="round" />
+          <path d="M28 74 Q50 84 72 74" stroke="rgba(255,255,255,0.2)" strokeWidth="1" fill="none" strokeLinecap="round" />
+          <circle cx="50" cy="84" r="7" fill="#d4a843" />
+          <circle cx="50" cy="84" r="5" fill="#c49030" />
+          <text x="50" y="88" textAnchor="middle" fontSize="7" fill="#1a1000" fontWeight="bold">$</text>
+        </g>
       ),
       glasses: (
-        <>
-          <circle cx="38" cy="44" r="9" fill="none" stroke="#c9a84c" strokeWidth="2" />
-          <circle cx="62" cy="44" r="9" fill="none" stroke="#c9a84c" strokeWidth="2" />
-          <line x1="47" y1="44" x2="53" y2="44" stroke="#c9a84c" strokeWidth="2" />
-          <line x1="20" y1="44" x2="29" y2="44" stroke="#c9a84c" strokeWidth="2" />
-          <line x1="71" y1="44" x2="80" y2="44" stroke="#c9a84c" strokeWidth="2" />
-        </>
+        <g>
+          <circle cx="36" cy="46" r="10" fill="rgba(100,200,255,0.1)" stroke="#d4a843" strokeWidth="2" />
+          <circle cx="64" cy="46" r="10" fill="rgba(100,200,255,0.1)" stroke="#d4a843" strokeWidth="2" />
+          <line x1="46" y1="46" x2="54" y2="46" stroke="#d4a843" strokeWidth="2" />
+          <line x1="18" y1="44" x2="26" y2="46" stroke="#d4a843" strokeWidth="2" strokeLinecap="round" />
+          <line x1="74" y1="46" x2="82" y2="44" stroke="#d4a843" strokeWidth="2" strokeLinecap="round" />
+        </g>
       ),
       tophat: (
-        <>
-          <rect x="30" y="4" width="40" height="20" rx="3" fill="#1a1a1a" />
-          <rect x="20" y="22" width="60" height="6" rx="3" fill="#1a1a1a" />
-          <rect x="30" y="22" width="40" height="3" fill="#c9a84c" />
-        </>
+        <g>
+          <rect x="32" y="6" width="36" height="20" rx="3" fill="#111" />
+          <rect x="32" y="6" width="36" height="4" rx="2" fill="#1a1a1a" />
+          <rect x="20" y="24" width="60" height="7" rx="3" fill="#111" />
+          <rect x="32" y="22" width="36" height="4" fill="#d4a843" opacity="0.6" />
+          <rect x="34" y="8" width="10" height="16" rx="1" fill="rgba(255,255,255,0.03)" />
+        </g>
       ),
       halo: (
-        <>
-          <ellipse cx="50" cy="10" rx="22" ry="6" fill="none" stroke="#c9a84c" strokeWidth="3" />
-          <ellipse cx="50" cy="10" rx="22" ry="6" fill="rgba(201,168,76,0.1)" />
-        </>
+        <g>
+          <ellipse cx="50" cy="10" rx="24" ry="7" fill="none" stroke="#d4a843" strokeWidth="3" />
+          <ellipse cx="50" cy="10" rx="24" ry="7" fill="rgba(212,168,67,0.08)" />
+          <ellipse cx="50" cy="10" rx="24" ry="7" fill="none" stroke="rgba(255,255,255,0.3)" strokeWidth="1" />
+        </g>
       ),
     }
   
@@ -118,16 +147,34 @@ export default function BeanCharacter({ color = '#2ecc71', eyes = 'default', acc
         viewBox="0 0 100 100"
         width={size}
         height={size}
-        style={{ borderRadius: '50%', background: backgrounds[background] || backgrounds.default }}
+        style={{ borderRadius: '50%', background: backgrounds[background] || backgrounds.default, display: 'block' }}
       >
-        <ellipse cx="50" cy="52" rx="32" ry="36" fill={color} />
-        <ellipse cx="50" cy="30" rx="26" ry="28" fill={color} />
-        <ellipse cx="50" cy="30" rx="20" ry="22" fill={color} opacity="0.3" />
+        <defs>
+          <radialGradient id={"bg_" + size} cx="50%" cy="30%" r="70%">
+            <stop offset="0%" stopColor="rgba(255,255,255,0.08)" />
+            <stop offset="100%" stopColor="rgba(0,0,0,0)" />
+          </radialGradient>
+          <radialGradient id={"body_" + size} cx="35%" cy="30%" r="65%">
+            <stop offset="0%" stopColor="rgba(255,255,255,0.2)" />
+            <stop offset="60%" stopColor="rgba(255,255,255,0)" />
+            <stop offset="100%" stopColor="rgba(0,0,0,0.2)" />
+          </radialGradient>
+        </defs>
   
-        {accessories[accessory]}
-        {eyeOptions[eyes]}
+        <ellipse cx="50" cy="100" rx="28" ry="6" fill="rgba(0,0,0,0.3)" />
+        <ellipse cx="50" cy="58" rx="30" ry="34" fill={bodyColor} />
+        <ellipse cx="50" cy="34" rx="26" ry="30" fill={bodyColor} />
+        <ellipse cx="50" cy="44" rx="29" ry="32" fill={bodyColor} />
+        <ellipse cx="50" cy="44" rx="29" ry="32" fill={"url(#body_" + size + ")"} />
+        <ellipse cx="42" cy="32" rx="8" ry="10" fill="rgba(255,255,255,0.08)" />
   
-        <path d="M40 62 Q50 70 60 62" stroke="white" strokeWidth="2" fill="none" strokeLinecap="round" />
+        {accessorySet[accessory]}
+        {eyeSet[eyes]}
+  
+        <path d="M38 64 Q50 73 62 64" stroke="rgba(0,0,0,0.5)" strokeWidth="2.5" fill="none" strokeLinecap="round" />
+        <path d="M38 63 Q50 72 62 63" stroke="rgba(255,255,255,0.6)" strokeWidth="2" fill="none" strokeLinecap="round" />
+  
+        <ellipse cx="50" cy="44" rx="29" ry="32" fill={"url(#bg_" + size + ")"} />
       </svg>
     )
   }
