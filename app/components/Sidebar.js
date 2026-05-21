@@ -8,21 +8,12 @@ const navItems = [
   { href: '/learn', label: 'Learn', icon: '📖' },
   { href: '/play', label: 'Practice', icon: '◎' },
   { href: '/exchange', label: 'Exchange', icon: '⇄' },
-  { href: '/journal', label: 'Journal', icon: '✎' },
   { href: '/leaderboard', label: 'Records', icon: '◈' },
-  { href: '/community', label: 'Community', icon: '◉' },
-]
-
-const bottomItems = [
-  { href: '/profile', label: 'Thaleon', icon: '✦', gold: true },
-  { href: '/settings', label: 'Settings', icon: '⚙' },
 ]
 
 const quotes = [
   { text: "The years will pass anyway. The question is what you build with them.", author: "Southern Proverb" },
   { text: "Price is what you pay. Value is what you get.", author: "Warren Buffett" },
-  { text: "The goal isn't to predict the market. The goal is to prepare for it.", author: "Unknown" },
-  { text: "Wealth is not about having a lot of money. It's about having a lot of options.", author: "Chris Rock" },
   { text: "Discipline today, freedom tomorrow.", author: "Beans" },
   { text: "The best time to plant a tree was 20 years ago. The second best time is now.", author: "Chinese Proverb" },
 ]
@@ -31,20 +22,19 @@ export default function Sidebar() {
   const [user, setUser] = useState(null)
   const [profile, setProfile] = useState(null)
   const [currentPath, setCurrentPath] = useState('/')
-  const [quote] = useState(quotes[Math.floor(Math.random() * quotes.length)])
+  const [quote, setQuote] = useState(quotes[0])
+
+useEffect(() => {
+    setQuote(quotes[Math.floor(Math.random() * quotes.length)])
+  }, [])
 
   useEffect(() => {
     setCurrentPath(window.location.pathname)
-
     const getUser = async () => {
       const { data: { user } } = await supabase.auth.getUser()
       setUser(user)
       if (user) {
-        const { data } = await supabase
-          .from('profiles')
-          .select('*')
-          .eq('user_id', user.id)
-          .single()
+        const { data } = await supabase.from('profiles').select('*').eq('user_id', user.id).single()
         setProfile(data)
       }
     }
@@ -62,13 +52,72 @@ export default function Sidebar() {
   const xpForNext = level * 200
   const xpProgress = Math.min((xp % xpForNext) / xpForNext * 100, 100)
 
+  const sidebarStyle = {
+    width: '220px',
+    background: 'var(--deep)',
+    borderRight: '1px solid var(--border)',
+    display: 'flex',
+    flexDirection: 'column',
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    height: '100vh',
+    zIndex: 50,
+    overflowY: 'auto'
+  }
+
+  const logoStyle = {
+    padding: '24px 20px 16px',
+    borderBottom: '1px solid var(--border)'
+  }
+
+  const logoLinkStyle = {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '10px',
+    textDecoration: 'none'
+  }
+
+  const logoTextStyle = {
+    fontFamily: 'Playfair Display, serif',
+    fontSize: '15px',
+    fontWeight: '600',
+    color: 'var(--white)',
+    letterSpacing: '0.5px'
+  }
+
+  const logoSubStyle = {
+    fontFamily: 'JetBrains Mono, monospace',
+    fontSize: '8px',
+    letterSpacing: '2px',
+    color: 'var(--gold-dim)',
+    textTransform: 'uppercase'
+  }
+
+  const getNavStyle = (href) => ({
+    display: 'flex',
+    alignItems: 'center',
+    gap: '10px',
+    padding: '9px 16px',
+    borderRadius: '6px',
+    color: currentPath === href ? 'var(--white)' : 'var(--text-muted)',
+    fontSize: '13px',
+    fontWeight: '500',
+    transition: 'all 0.15s',
+    cursor: 'pointer',
+    margin: '1px 8px',
+    background: currentPath === href ? 'var(--green-subtle)' : 'transparent',
+    borderLeft: currentPath === href ? '2px solid var(--green)' : '2px solid transparent',
+    textDecoration: 'none'
+  })
+
   return (
-    <aside className="sidebar">
-      {/* LOGO */}
-      <div style={{ padding: '24px 20px 16px', borderBottom: '1px solid var(--border)' }}>
-        <a href="/" style={{ display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none' }}>
+    <aside style={sidebarStyle}>
+
+      <div style={logoStyle}>
+        <a href="/" style={logoLinkStyle}>
           <div style={{ width: '32px', height: '32px', flexShrink: 0 }}>
-            <svg viewBox="0 0 32 32" fill="none">
+            <svg viewBox="0 0 32 32" fill="none" width="32" height="32">
               <ellipse cx="16" cy="20" rx="10" ry="11" fill="#4a7c59" />
               <ellipse cx="16" cy="12" rx="8" ry="10" fill="#4a7c59" />
               <ellipse cx="16" cy="16" rx="9" ry="10" fill="#4a7c59" />
@@ -79,20 +128,15 @@ export default function Sidebar() {
             </svg>
           </div>
           <div>
-            <div style={{ fontFamily: 'Playfair Display, serif', fontSize: '15px', fontWeight: '600', color: 'var(--white)', letterSpacing: '0.5px' }}>BEANS</div>
-            <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '8px', letterSpacing: '2px', color: 'var(--gold-dim)', textTransform: 'uppercase' }}>Trading Co.</div>
+            <div style={logoTextStyle}>BEANS</div>
+            <div style={logoSubStyle}>Trading Co.</div>
           </div>
         </a>
       </div>
 
-      {/* NAV */}
       <nav style={{ flex: 1, padding: '12px 0' }}>
         {navItems.map(item => (
-          
-            key={item.href}
-            href={item.href}
-            className={`nav-item ${currentPath === item.href ? 'active' : ''}`}
-          >
+          <a key={item.href} href={item.href} style={getNavStyle(item.href)}>
             <span style={{ fontSize: '14px', width: '18px', textAlign: 'center', flexShrink: 0 }}>{item.icon}</span>
             <span>{item.label}</span>
           </a>
@@ -100,36 +144,27 @@ export default function Sidebar() {
 
         <div style={{ height: '1px', background: 'var(--border)', margin: '12px 16px' }} />
 
-        {bottomItems.map(item => (
-          
-            key={item.href}
-            href={item.href}
-            className={`nav-item ${item.gold ? 'nav-item-gold' : ''} ${currentPath === item.href ? 'active' : ''}`}
-            style={item.gold ? { color: 'var(--gold-dim)' } : {}}
-          >
-            <span style={{ fontSize: '14px', width: '18px', textAlign: 'center', flexShrink: 0 }}>{item.icon}</span>
-            <span>{item.label}</span>
-            {item.gold && <span style={{ marginLeft: 'auto', fontFamily: 'JetBrains Mono, monospace', fontSize: '8px', letterSpacing: '1px', background: 'var(--gold-subtle)', border: '1px solid var(--gold-dim)', color: 'var(--gold)', padding: '2px 6px', borderRadius: '3px' }}>AI</span>}
-          </a>
-        ))}
+        <a href="/profile" style={getNavStyle('/profile')}>
+          <span style={{ fontSize: '14px', width: '18px', textAlign: 'center', flexShrink: 0 }}>✦</span>
+          <span style={{ color: currentPath === '/profile' ? 'var(--gold)' : 'var(--gold-dim)' }}>Thaleon</span>
+          <span style={{ marginLeft: 'auto', fontFamily: 'JetBrains Mono, monospace', fontSize: '8px', letterSpacing: '1px', background: 'var(--gold-subtle)', border: '1px solid var(--gold-dim)', color: 'var(--gold)', padding: '2px 6px', borderRadius: '3px' }}>AI</span>
+        </a>
+
+        <a href="/trade" style={getNavStyle('/trade')}>
+          <span style={{ fontSize: '14px', width: '18px', textAlign: 'center', flexShrink: 0 }}>⚙</span>
+          <span>Settings</span>
+        </a>
       </nav>
 
-      {/* BEAN CHARACTER PANEL */}
-      <div style={{ margin: '8px', borderRadius: '8px', overflow: 'hidden', position: 'relative', height: '180px', background: 'var(--surface)' }}>
-        <div style={{
-          position: 'absolute', inset: 0,
-          background: 'linear-gradient(160deg, #1a2a1e 0%, #0f1a12 40%, #0a0f0c 100%)',
-        }} />
-        <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '12px', background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
-            <div style={{ width: '28px', height: '28px', borderRadius: '50%', overflow: 'hidden', border: '1px solid var(--border-light)', flexShrink: 0 }}>
-              <svg viewBox="0 0 28 28" fill="none" width="28" height="28">
-                <rect width="28" height="28" fill="#0f1a12" />
-                <ellipse cx="14" cy="17" rx="8" ry="9" fill="#4a7c59" />
-                <ellipse cx="14" cy="10" rx="7" ry="8" fill="#4a7c59" />
-                <circle cx="11.5" cy="12" r="1.2" fill="#1a1714" />
-                <circle cx="16.5" cy="12" r="1.2" fill="#1a1714" />
-                <path d="M10 18 Q14 21 18 18" stroke="rgba(255,255,255,0.4)" strokeWidth="1.2" fill="none" strokeLinecap="round" />
+      <div style={{ margin: '8px', borderRadius: '8px', overflow: 'hidden', position: 'relative', height: '160px', background: 'linear-gradient(160deg, #1a2a1e 0%, #0f1a12 40%, #0a0f0c 100%)' }}>
+        <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '12px', background: 'linear-gradient(to top, rgba(0,0,0,0.9), transparent)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+            <div style={{ width: '28px', height: '28px', borderRadius: '50%', border: '1px solid var(--border-light)', flexShrink: 0, background: '#0f1a12', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <svg viewBox="0 0 20 20" fill="none" width="20" height="20">
+                <ellipse cx="10" cy="13" rx="6" ry="6" fill="#4a7c59" />
+                <ellipse cx="10" cy="8" rx="5" ry="6" fill="#4a7c59" />
+                <circle cx="8" cy="9" r="1" fill="#1a1714" />
+                <circle cx="12" cy="9" r="1" fill="#1a1714" />
               </svg>
             </div>
             <div>
@@ -137,8 +172,8 @@ export default function Sidebar() {
               <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '8px', color: 'var(--text-muted)', letterSpacing: '1px' }}>STEWARD · LEVEL {level}</div>
             </div>
           </div>
-          <div className="progress-bar">
-            <div className="progress-fill-gold" style={{ width: xpProgress + '%' }} />
+          <div style={{ height: '2px', background: 'var(--border)', borderRadius: '1px', overflow: 'hidden' }}>
+            <div style={{ height: '100%', width: xpProgress + '%', background: 'var(--gold)', borderRadius: '1px', transition: 'width 0.5s ease' }} />
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '4px' }}>
             <span style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '8px', color: 'var(--text-dim)' }}>{xp} XP</span>
@@ -147,25 +182,24 @@ export default function Sidebar() {
         </div>
       </div>
 
-      {/* QUOTE */}
-      <div style={{ padding: '12px 16px 20px' }}>
-        <div className="quote-block">
-          <p style={{ marginBottom: '4px' }}>"{quote.text}"</p>
-          <p style={{ fontSize: '10px', color: 'var(--text-dim)', fontFamily: 'JetBrains Mono, monospace', letterSpacing: '1px', fontStyle: 'normal' }}>— {quote.author}</p>
+      <div style={{ padding: '12px 16px' }}>
+        <div style={{ borderLeft: '2px solid var(--gold-dim)', padding: '8px 12px' }}>
+          <p style={{ fontFamily: 'Playfair Display, serif', fontStyle: 'italic', color: 'var(--text-muted)', fontSize: '11px', lineHeight: '1.6', marginBottom: '4px' }}>"{quote.text}"</p>
+          <p style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '9px', color: 'var(--text-dim)', letterSpacing: '1px' }}>— {quote.author}</p>
         </div>
       </div>
 
-      {/* SIGN OUT */}
       {user && (
-        <div style={{ padding: '0 16px 16px' }}>
+        <div style={{ padding: '0 16px 20px' }}>
           <button
             onClick={async () => { await supabase.auth.signOut(); window.location.href = '/auth' }}
-            style={{ width: '100%', padding: '8px', background: 'none', border: '1px solid var(--border)', borderRadius: '6px', color: 'var(--text-dim)', fontSize: '12px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px', justifyContent: 'center' }}
+            style={{ width: '100%', padding: '8px', background: 'none', border: '1px solid var(--border)', borderRadius: '6px', color: 'var(--text-dim)', fontSize: '12px', cursor: 'pointer' }}
           >
-            <span>↪</span> Sign Out
+            Sign Out
           </button>
         </div>
       )}
+
     </aside>
   )
 }
