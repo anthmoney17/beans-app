@@ -28,7 +28,7 @@ export default function Auth() {
     if (error) {
       setMessage(error.message)
     } else {
-      window.location.href = '/profile'
+      window.location.href = '/dashboard'
     }
     setLoading(false)
   }
