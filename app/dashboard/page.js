@@ -91,15 +91,23 @@ export default function Dashboard() {
   return (
     <div style={{ minHeight: '100vh', background: 'var(--black)', position: 'relative', overflow: 'hidden' }}>
 
-      {/* ATMOSPHERIC BACKGROUND */}
+      {/* LODGE HERO BACKGROUND */}
       <div style={{
         position: 'fixed', inset: 0, zIndex: 0,
-        background: 'linear-gradient(160deg, #0f1a0f 0%, #0a0d09 40%, #080907 100%)',
+        backgroundImage: 'url(/assets/238929F2-1DCF-41C0-B209-8DE4BFA09BBA.jpeg)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundAttachment: 'fixed',
         pointerEvents: 'none'
       }} />
       <div style={{
         position: 'fixed', inset: 0, zIndex: 0,
-        backgroundImage: 'radial-gradient(ellipse 80% 60% at 75% 40%, rgba(74,124,89,0.06) 0%, transparent 60%), radial-gradient(ellipse 40% 40% at 20% 80%, rgba(201,168,76,0.03) 0%, transparent 50%)',
+        background: 'linear-gradient(160deg, rgba(5,8,5,0.85) 0%, rgba(8,12,7,0.75) 40%, rgba(5,8,5,0.9) 100%)',
+        pointerEvents: 'none'
+      }} />
+      <div style={{
+        position: 'fixed', inset: 0, zIndex: 0,
+        backgroundImage: 'radial-gradient(ellipse 60% 60% at 70% 40%, rgba(201,168,76,0.06) 0%, transparent 60%)',
         pointerEvents: 'none'
       }} />
 
@@ -145,62 +153,20 @@ export default function Dashboard() {
             </div>
 
             {/* THALEON SVG */}
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', paddingTop: '60px', paddingBottom: '20px' }}>
-              <svg viewBox="0 0 160 200" width="160" height="200" fill="none">
-                {/* Body */}
-                <ellipse cx="80" cy="130" rx="36" ry="50" fill="#2d4a35" />
-                <ellipse cx="80" cy="85" rx="30" ry="40" fill="#2d4a35" />
-                <ellipse cx="80" cy="105" rx="34" ry="42" fill="#2d4a35" />
-                {/* Coat detail */}
-                <ellipse cx="80" cy="105" rx="34" ry="42" fill="url(#coatGrad)" />
-                {/* Head */}
-                <ellipse cx="80" cy="68" rx="26" ry="30" fill="#3d5e45" />
-                <ellipse cx="80" cy="55" rx="22" ry="26" fill="#3d5e45" />
-                <ellipse cx="80" cy="62" rx="25" ry="28" fill="#3d5e45" />
-                {/* Head highlight */}
-                <ellipse cx="68" cy="52" rx="8" ry="10" fill="rgba(255,255,255,0.06)" />
-                {/* Hat */}
-                <ellipse cx="80" cy="36" rx="24" ry="7" fill="#1a2a1e" />
-                <rect x="60" y="20" width="40" height="18" rx="4" fill="#1f3028" />
-                <rect x="60" y="20" width="40" height="5" rx="2" fill="#243520" />
-                <rect x="60" y="32" width="40" height="3" fill="rgba(201,168,76,0.3)" />
-                {/* Eyes */}
-                <circle cx="72" cy="65" r="3" fill="#0f1a0f" />
-                <circle cx="88" cy="65" r="3" fill="#0f1a0f" />
-                <circle cx="73" cy="64" r="1" fill="rgba(255,255,255,0.4)" />
-                <circle cx="89" cy="64" r="1" fill="rgba(255,255,255,0.4)" />
-                {/* Mouth — subtle */}
-                <path d="M74 74 Q80 78 86 74" stroke="rgba(255,255,255,0.2)" strokeWidth="1.5" fill="none" strokeLinecap="round" />
-                {/* Scarf */}
-                <ellipse cx="80" cy="92" rx="28" ry="8" fill="#3a5a42" />
-                <path d="M72 92 Q80 98 88 92" fill="#2d4a35" />
-                {/* Lantern — right hand */}
-                <rect x="108" y="110" width="14" height="20" rx="3" fill="#8a6030" />
-                <rect x="110" y="112" width="10" height="16" rx="2" fill="rgba(255,200,80,0.3)" />
-                <ellipse cx="115" cy="110" rx="7" ry="3" fill="#6a4820" />
-                <ellipse cx="115" cy="130" rx="7" ry="3" fill="#6a4820" />
-                <path d="M115 108 L115 102" stroke="#6a4820" strokeWidth="2" strokeLinecap="round" />
-                {/* Warm glow from lantern */}
-                <ellipse cx="115" cy="120" rx="20" ry="25" fill="rgba(255,180,60,0.06)" />
-                {/* Journal — left hand */}
-                <rect x="34" y="115" width="20" height="26" rx="2" fill="#5a3a20" />
-                <rect x="36" y="117" width="16" height="22" rx="1" fill="#6a4a28" />
-                <line x1="38" y1="121" x2="50" y2="121" stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
-                <line x1="38" y1="125" x2="50" y2="125" stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
-                <line x1="38" y1="129" x2="46" y2="129" stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
-                {/* Feet */}
-                <ellipse cx="68" cy="178" rx="12" ry="5" fill="#1a2a1e" />
-                <ellipse cx="92" cy="178" rx="12" ry="5" fill="#1a2a1e" />
-                {/* Ground shadow */}
-                <ellipse cx="80" cy="182" rx="30" ry="6" fill="rgba(0,0,0,0.3)" />
-                <defs>
-                  <radialGradient id="coatGrad" cx="35%" cy="30%" r="65%">
-                    <stop offset="0%" stopColor="rgba(255,255,255,0.08)" />
-                    <stop offset="100%" stopColor="rgba(0,0,0,0.25)" />
-                  </radialGradient>
-                </defs>
-              </svg>
-            </div>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', paddingTop: '20px', paddingBottom: '0px' }}>
+            <img 
+    src="/assets/image2-removebg-preview.png"
+    alt="Thaleon"
+    style={{
+      width: '200px',
+      height: '240px',
+      objectFit: 'contain',
+      objectPosition: 'center',
+      filter: 'drop-shadow(0 8px 32px rgba(0,0,0,0.8))',
+    }}
+  />
+  
+</div>
 
             {/* THALEON INFO */}
             <div style={{ padding: '0 20px 20px' }}>
@@ -230,10 +196,13 @@ export default function Dashboard() {
           </div>
 
           {/* DAILY QUEST */}
-          <div style={{ background: 'var(--card)', border: '1px solid var(--border)', borderRadius: '12px', padding: '28px', position: 'relative', overflow: 'hidden' }}>
-            <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '2px', background: 'linear-gradient(90deg, var(--gold-dim), transparent)' }} />
-            <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '9px', letterSpacing: '2px', color: 'var(--gold-dim)', textTransform: 'uppercase', marginBottom: '16px' }}>Daily Quest</div>
-
+          <div style={{ borderRadius: '12px', padding: '28px', position: 'relative', overflow: 'hidden', border: '1px solid var(--border)' }}>
+            <div style={{ position: 'absolute', inset: 0, backgroundImage: 'url(/assets/12F74941-2734-4AD3-8B8F-8C1ADA5B6566_4_5005_c.jpeg)', backgroundSize: 'cover', backgroundPosition: 'center', zIndex: 0 }} />
+            <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(160deg, rgba(5,8,5,0.88) 0%, rgba(8,12,7,0.82) 100%)', zIndex: 1 }} />
+            <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '2px', background: 'linear-gradient(90deg, var(--gold-dim), transparent)', zIndex: 2 }} />
+            <div style={{ position: 'relative', zIndex: 2 }}>
+            <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '9px', letterSpacing: '2px', color: 'var(--gold-dim)', textTransform: 'uppercase', marginBottom: '16px' }}>Daily Quest</div> 
+</div>
             {nextLesson ? (
               <>
                 <h3 style={{ fontFamily: 'Playfair Display, serif', fontSize: '20px', color: 'var(--white)', marginBottom: '8px', lineHeight: '1.3' }}>
@@ -266,8 +235,12 @@ export default function Dashboard() {
           </div>
 
           {/* JOURNEY PROGRESS */}
-          <div style={{ background: 'var(--card)', border: '1px solid var(--border)', borderRadius: '12px', padding: '28px' }}>
-            <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '9px', letterSpacing: '2px', color: 'var(--text-dim)', textTransform: 'uppercase', marginBottom: '20px' }}>Current Journey</div>
+          <div style={{ borderRadius: '12px', padding: '28px', position: 'relative', overflow: 'hidden', border: '1px solid var(--border)' }}>
+            <div style={{ position: 'absolute', inset: 0, backgroundImage: 'url(/assets/0D6DC669-E325-4F28-A61A-808422027B23_4_5005_c.jpeg)', backgroundSize: 'cover', backgroundPosition: 'center', zIndex: 0 }} />
+            <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(160deg, rgba(5,8,5,0.88) 0%, rgba(8,12,7,0.82) 100%)', zIndex: 1 }} />
+            <div style={{ position: 'relative', zIndex: 2 }}>
+            <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '9px', letterSpacing: '2px', color: 'var(--text-dim)', textTransform: 'uppercase', marginBottom: '16px' }}>Reflection Journal</div>
+            </div>
 
             <div style={{ marginBottom: '20px' }}>
               <div style={{ fontFamily: 'Playfair Display, serif', fontSize: '24px', color: 'var(--white)', fontWeight: '600', marginBottom: '4px' }}>{stage.name}</div>
@@ -298,8 +271,12 @@ export default function Dashboard() {
           </div>
 
           {/* CONTINUE LEARNING */}
-          <div style={{ background: 'var(--card)', border: '1px solid var(--border)', borderRadius: '12px', padding: '28px' }}>
+          <div style={{ borderRadius: '12px', padding: '28px', position: 'relative', overflow: 'hidden', border: '1px solid var(--border)' }}>
+            <div style={{ position: 'absolute', inset: 0, backgroundImage: 'url(/assets/849E75BB-726B-4021-8262-B619A8279DD0_4_5005_c.jpeg)', backgroundSize: 'cover', backgroundPosition: 'center', zIndex: 0 }} />
+            <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(160deg, rgba(5,8,5,0.9) 0%, rgba(8,12,7,0.85) 100%)', zIndex: 1 }} />
+            <div style={{ position: 'relative', zIndex: 2 }}>
             <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '9px', letterSpacing: '2px', color: 'var(--text-dim)', textTransform: 'uppercase', marginBottom: '16px' }}>Continue Learning</div>
+            </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               {lessons.slice(0, 4).map((lesson, i) => {
                 const done = completedIds.has(lesson.id)
@@ -323,8 +300,12 @@ export default function Dashboard() {
           </div>
 
           {/* PRACTICE & EXCHANGE */}
-          <div style={{ background: 'var(--card)', border: '1px solid var(--border)', borderRadius: '12px', padding: '28px' }}>
+          <div style={{ borderRadius: '12px', padding: '28px', position: 'relative', overflow: 'hidden', border: '1px solid var(--border)' }}>
+            <div style={{ position: 'absolute', inset: 0, backgroundImage: 'url(/assets/3577F586-56B1-4918-BBDA-7CCAF318BF99_4_5005_c.jpeg)', backgroundSize: 'cover', backgroundPosition: 'center', zIndex: 0 }} />
+            <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(160deg, rgba(5,8,5,0.9) 0%, rgba(8,12,7,0.85) 100%)', zIndex: 1 }} />
+            <div style={{ position: 'relative', zIndex: 2 }}>
             <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '9px', letterSpacing: '2px', color: 'var(--text-dim)', textTransform: 'uppercase', marginBottom: '16px' }}>Practice Challenge</div>
+            </div>
             <p style={{ fontFamily: 'Playfair Display, serif', fontStyle: 'italic', color: 'var(--text-muted)', fontSize: '14px', lineHeight: '1.7', marginBottom: '16px' }}>
               Apply what you've learned. Test your strategy without risk.
             </p>
