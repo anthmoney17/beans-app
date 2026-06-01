@@ -4,14 +4,12 @@ import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase'
 
 const navItems = [
-    const navItems = [
-        { href: '/dashboard', label: 'Stewards Lodge', icon: '\u2302' },
-        { href: '/learn', label: 'Learning Hall', icon: '📖' },
-        { href: '/play', label: 'Practice Grounds', icon: '◎' },
-        { href: '/exchange', label: 'Exchange Hall', icon: '⇄' },
-        { href: '/leaderboard', label: 'Records', icon: '◈' },
-        { href: '/dashboard/archive', label: 'Archive', icon: '✎' },
-      ]
+  { href: '/dashboard', label: 'Stewards Lodge', icon: '⌂' },
+  { href: '/learn', label: 'Learning Hall', icon: '📖' },
+  { href: '/play', label: 'Practice Grounds', icon: '◎' },
+  { href: '/exchange', label: 'Exchange Hall', icon: '⇄' },
+  { href: '/leaderboard', label: 'Records', icon: '◈' },
+  { href: '/dashboard/archive', label: 'Archive', icon: '✎' },
 ]
 
 const quotes = [
@@ -19,6 +17,7 @@ const quotes = [
   { text: "Price is what you pay. Value is what you get.", author: "Warren Buffett" },
   { text: "Discipline today, freedom tomorrow.", author: "Beans" },
   { text: "The best time to plant a tree was 20 years ago. The second best time is now.", author: "Chinese Proverb" },
+  { text: "The goal is not to predict the market. The goal is to prepare for it.", author: "Unknown" },
 ]
 
 export default function Sidebar() {
@@ -27,12 +26,10 @@ export default function Sidebar() {
   const [currentPath, setCurrentPath] = useState('/')
   const [quote, setQuote] = useState(quotes[0])
 
-useEffect(() => {
-    setQuote(quotes[Math.floor(Math.random() * quotes.length)])
-  }, [])
-
   useEffect(() => {
     setCurrentPath(window.location.pathname)
+    setQuote(quotes[Math.floor(Math.random() * quotes.length)])
+
     const getUser = async () => {
       const { data: { user } } = await supabase.auth.getUser()
       setUser(user)
@@ -55,48 +52,6 @@ useEffect(() => {
   const xpForNext = level * 200
   const xpProgress = Math.min((xp % xpForNext) / xpForNext * 100, 100)
 
-  const sidebarStyle = {
-    width: '220px',
-    background: 'var(--deep)',
-    borderRight: '1px solid var(--border)',
-    display: 'flex',
-    flexDirection: 'column',
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    height: '100vh',
-    zIndex: 50,
-    overflowY: 'auto'
-  }
-
-  const logoStyle = {
-    padding: '24px 20px 16px',
-    borderBottom: '1px solid var(--border)'
-  }
-
-  const logoLinkStyle = {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '10px',
-    textDecoration: 'none'
-  }
-
-  const logoTextStyle = {
-    fontFamily: 'Playfair Display, serif',
-    fontSize: '15px',
-    fontWeight: '600',
-    color: 'var(--white)',
-    letterSpacing: '0.5px'
-  }
-
-  const logoSubStyle = {
-    fontFamily: 'JetBrains Mono, monospace',
-    fontSize: '8px',
-    letterSpacing: '2px',
-    color: 'var(--gold-dim)',
-    textTransform: 'uppercase'
-  }
-
   const getNavStyle = (href) => ({
     display: 'flex',
     alignItems: 'center',
@@ -107,7 +62,6 @@ useEffect(() => {
     fontSize: '13px',
     fontWeight: '500',
     transition: 'all 0.15s',
-    cursor: 'pointer',
     margin: '1px 8px',
     background: currentPath === href ? 'var(--green-subtle)' : 'transparent',
     borderLeft: currentPath === href ? '2px solid var(--green)' : '2px solid transparent',
@@ -115,10 +69,22 @@ useEffect(() => {
   })
 
   return (
-    <aside style={sidebarStyle}>
+    <aside style={{
+      width: '220px',
+      background: 'var(--deep)',
+      borderRight: '1px solid var(--border)',
+      display: 'flex',
+      flexDirection: 'column',
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      height: '100vh',
+      zIndex: 50,
+      overflowY: 'auto'
+    }}>
 
-      <div style={logoStyle}>
-        <a href="/" style={logoLinkStyle}>
+      <div style={{ padding: '24px 20px 16px', borderBottom: '1px solid var(--border)' }}>
+        <a href="/dashboard" style={{ display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none' }}>
           <div style={{ width: '32px', height: '32px', flexShrink: 0 }}>
             <svg viewBox="0 0 32 32" fill="none" width="32" height="32">
               <ellipse cx="16" cy="20" rx="10" ry="11" fill="#4a7c59" />
@@ -131,8 +97,8 @@ useEffect(() => {
             </svg>
           </div>
           <div>
-            <div style={logoTextStyle}>BEANS</div>
-            <div style={logoSubStyle}>Trading Co.</div>
+            <div style={{ fontFamily: 'Playfair Display, serif', fontSize: '15px', fontWeight: '600', color: 'var(--white)', letterSpacing: '0.5px' }}>BEANS</div>
+            <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '8px', letterSpacing: '2px', color: 'var(--gold-dim)', textTransform: 'uppercase' }}>Trading Co.</div>
           </div>
         </a>
       </div>
@@ -150,12 +116,7 @@ useEffect(() => {
         <a href="/profile" style={getNavStyle('/profile')}>
           <span style={{ fontSize: '14px', width: '18px', textAlign: 'center', flexShrink: 0 }}>✦</span>
           <span style={{ color: currentPath === '/profile' ? 'var(--gold)' : 'var(--gold-dim)' }}>Thaleon</span>
-          <span style={{ marginLeft: 'auto', fontFamily: 'JetBrains Mono, monospace', fontSize: '8px', letterSpacing: '1px', background: 'var(--gold-subtle)', border: '1px solid var(--gold-dim)', color: 'var(--gold)', padding: '2px 6px', borderRadius: '3px' }}>AI</span>
-        </a>
-
-        <a href="/trade" style={getNavStyle('/trade')}>
-          <span style={{ fontSize: '14px', width: '18px', textAlign: 'center', flexShrink: 0 }}>⚙</span>
-          <span>Settings</span>
+          <span style={{ marginLeft: 'auto', fontFamily: 'JetBrains Mono, monospace', fontSize: '8px', background: 'var(--gold-subtle)', border: '1px solid var(--gold-dim)', color: 'var(--gold)', padding: '2px 6px', borderRadius: '3px' }}>AI</span>
         </a>
       </nav>
 
@@ -176,7 +137,7 @@ useEffect(() => {
             </div>
           </div>
           <div style={{ height: '2px', background: 'var(--border)', borderRadius: '1px', overflow: 'hidden' }}>
-            <div style={{ height: '100%', width: xpProgress + '%', background: 'var(--gold)', borderRadius: '1px', transition: 'width 0.5s ease' }} />
+            <div style={{ height: '100%', width: xpProgress + '%', background: 'var(--gold)', transition: 'width 0.5s ease' }} />
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '4px' }}>
             <span style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '8px', color: 'var(--text-dim)' }}>{xp} XP</span>
