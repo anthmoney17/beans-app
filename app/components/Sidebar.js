@@ -4,11 +4,14 @@ import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase'
 
 const navItems = [
-  { href: '/', label: 'Home', icon: '⌂' },
-  { href: '/learn', label: 'Learn', icon: '📖' },
-  { href: '/play', label: 'Practice', icon: '◎' },
-  { href: '/exchange', label: 'Exchange', icon: '⇄' },
-  { href: '/leaderboard', label: 'Records', icon: '◈' },
+    const navItems = [
+        { href: '/dashboard', label: 'Stewards Lodge', icon: '\u2302' },
+        { href: '/learn', label: 'Learning Hall', icon: '📖' },
+        { href: '/play', label: 'Practice Grounds', icon: '◎' },
+        { href: '/exchange', label: 'Exchange Hall', icon: '⇄' },
+        { href: '/leaderboard', label: 'Records', icon: '◈' },
+        { href: '/dashboard/archive', label: 'Archive', icon: '✎' },
+      ]
 ]
 
 const quotes = [
